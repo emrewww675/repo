@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nereye Gitsek? - Giriş & Kaydol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <div class="floating-shapes">
+        <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
+    </div>
+
+    <div class="auth-container">
+        <div class="auth-card">
+            <a href="anasayfa.html" class="back-home"><i class="fas fa-arrow-left"></i> Ana Sayfaya Dön</a>
+            <div class="logo-area">
+                <i class="fas fa-compass logo-icon"></i>
+                <h1>Nereye<span>Gitsek?</span></h1>
+            </div>
+            <h2 id="formTitle">Giriş Yap</h2>
+            <p class="subtitle">Buluşma yeri seçmek hiç bu kadar keyifli olmamıştı!</p>
+            <form id="authForm">
+                <div class="input-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="email" placeholder="E-posta adresiniz" required>
+                </div>
+                <div class="input-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" placeholder="Şifreniz" required minlength="6">
+                </div>
+                <div id="passwordRules" class="password-rules" style="display: none;">
+                    <p class="rules-title"><i class="fas fa-shield-alt"></i> Şifre Kriterleri</p>
+                    <div class="rule" id="ruleLength"><i class="fas fa-circle"></i> En az 8 karakter</div>
+                    <div class="rule" id="ruleUpper"><i class="fas fa-circle"></i> En az 1 büyük harf</div>
+                    <div class="rule" id="ruleLower"><i class="fas fa-circle"></i> En az 1 küçük harf</div>
+                    <div class="rule" id="ruleDigit"><i class="fas fa-circle"></i> En az 1 rakam</div>
+                    <div class="rule" id="ruleSpecial"><i class="fas fa-circle"></i> En az 1 özel karakter</div>
+                </div>
+                <button type="submit" id="submitBtn">
+                    <span>Giriş Yap</span>
+                    <i class="fas fa-arrow-right"></i>
+                </button>
+            </form>
+            <p id="errorMsg" class="error-msg"></p>
+            <p class="toggle-text">
+                <a href="#" id="toggleLink">Hesabınız yok mu? <strong>Kaydolun</strong></a>
+            </p>
+        </div>
+    </div>
+
+    <script src="login.js"></script>
+</body>
+</html>
