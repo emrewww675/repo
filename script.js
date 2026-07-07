@@ -67,7 +67,7 @@ async function showSearchResults(district='', category='all', searchTerm='') {
 function resetToPopular() { searchSection.style.display = 'none'; fetchFeaturedVenues(); }
 
 // SAYFA YÜKLENİNCE
-document.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('load', () => {
   fetchFeaturedVenues();
   updateUserUI();
 });
@@ -112,7 +112,7 @@ function openDetailModal(card) {
 document.getElementById('closeDetail')?.addEventListener('click', () => document.getElementById('detailModal').classList.remove('active'));
 window.addEventListener('click', e => { if (e.target === document.getElementById('detailModal')) document.getElementById('detailModal').classList.remove('active'); });
 
-// AÇILIR KULLANICI MENÜSÜ (KESİN ÇÖZÜM)
+// AÇILIR KULLANICI MENÜSÜ
 const signupBtn = document.getElementById('signupBtn'), loginBtn = document.getElementById('loginBtn'), userMenuContainer = document.getElementById('userMenuContainer'), userMenuBtn = document.getElementById('userMenuBtn'), userDropdown = document.getElementById('userDropdown'), userDisplayName = document.getElementById('userDisplayName'), logoutBtn = document.getElementById('logoutBtn');
 
 userMenuBtn?.addEventListener('click', (e) => { e.stopPropagation(); userDropdown.classList.toggle('show'); userMenuBtn.classList.toggle('active'); });
@@ -128,7 +128,6 @@ async function loadUserProfile() {
 }
 
 async function updateUserUI() {
-  // Oturumu direkt depolamadan alıyoruz, anında çalışır
   const { data: { session } } = await window.supabaseClient.auth.getSession();
   const user = session?.user;
 
@@ -144,15 +143,9 @@ async function updateUserUI() {
     if (userDisplayName) userDisplayName.textContent = 'Profilim';
   }
 
-  // Arama modunu kapat, mekanları yeniden yükle
   if (searchSection) searchSection.style.display = 'none';
   fetchFeaturedVenues();
 }
 
 logoutBtn?.addEventListener('click', async (e) => { e.preventDefault(); await window.supabaseClient.auth.signOut(); updateUserUI(); });
-
-// Oturum değişikliklerini anında yakala
 window.supabaseClient.auth.onAuthStateChange(() => updateUserUI());
-
-// Sayfa yüklendiğinde hemen çalıştır
-updateUserUI();
