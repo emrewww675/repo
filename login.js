@@ -2,7 +2,7 @@
     const SUPABASE_URL = 'https://hnpnaafxlpfrwiuiunxo.supabase.co';
     const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhucG5hYWZ4bHBmcndpdWl1bnhvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMyMzgzNTMsImV4cCI6MjA5ODgxNDM1M30.cQQ80l2kl18VIFupDwj9rGTj3Tr0Owr3YerYpzO_RPM';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    const HOME_PAGE = 'anasayfa.html';
+    const HOME_PAGE = 'index.html';  // ana sayfa dosyası
 
     window.addEventListener('DOMContentLoaded', async () => {
         const form = document.getElementById('authForm'),
@@ -31,7 +31,7 @@
                     <p style="color:#666;">${user.email} hesabıyla oturum açık.</p>
                     <a href="${HOME_PAGE}" class="btn-solid-nav" style="display:inline-block; margin-top:20px;">Ana Sayfaya Git</a>
                 </div>`;
-            return; // Kodun devamını durdur
+            return;
         }
 
         function updateFormMode() {
