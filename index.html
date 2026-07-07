@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nereye Gitsek? - Buluşma Yer Bulucu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="floating-shapes">
+        <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="logo"><i class="fas fa-compass"></i> NereyeGitsek?</div>
+        <ul class="nav-links">
+            <a href="#"><li>Keşfet</li></a>
+            <a href="#"><li>Etkinlikler</li></a>
+            <a href="#" id="wheelLink"><li>Karar Çarkı</li></a>
+            <a href="login.html" class="btn-outline" id="signupBtn"><i class="fas fa-user-plus"></i> Kaydol</a>
+            <a href="login.html" class="btn-solid-nav" id="loginBtn"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+            
+            <!-- AÇILIR KULLANICI MENÜSÜ -->
+            <div id="userMenuContainer" style="display:none; position:relative;">
+                <button id="userMenuBtn" class="user-dropdown-btn">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="userDisplayName">Profilim</span>
+                    <i class="fas fa-chevron-down"></i>
+                </button>
+                <div id="userDropdown" class="user-dropdown-content">
+                    <a href="profile.html"><i class="fas fa-id-card"></i> Profilim</a>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+                </div>
+            </div>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1>Bugün <span class="gradient-text">nereye</span> gitsek?</h1>
+        <p>Arkadaşlarınla buluşma yerini seçmek artık çok kolay. Filtrele, oyla, karar ver!</p>
+        <div class="search-wrapper">
+            <div class="search-box">
+                <i class="fas fa-map-pin"></i>
+                <input type="text" placeholder="Konum ara (örn: Kadıköy, Beşiktaş)" id="locationInput">
+                <button class="btn-search" id="searchBtn"><span>Hemen Bul</span> <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        <div class="categories" id="categoryContainer">
+            <div class="cat-item active" data-cat="all"><i class="fas fa-th-large"></i> Hepsi</div>
+            <div class="cat-item" data-cat="restaurant"><i class="fas fa-utensils"></i> Restoran</div>
+            <div class="cat-item" data-cat="cafe"><i class="fas fa-mug-saucer"></i> Kafe</div>
+            <div class="cat-item" data-cat="bar"><i class="fas fa-wine-glass"></i> Bar & Pub</div>
+            <div class="cat-item" data-cat="event"><i class="fas fa-calendar-star"></i> Etkinlik</div>
+        </div>
+    </section>
+
+    <section class="featured" id="searchSection" style="display: none;">
+        <div class="featured-header"><h2 id="searchTitle">🔍 Arama Sonuçları</h2></div>
+        <div class="card-grid" id="searchGrid"></div>
+    </section>
+
+    <section class="featured" id="featuredSection">
+        <div class="featured-header">
+            <h2>🌟 Öne Çıkan Mekanlar</h2>
+            <a href="#" id="refreshFeaturedBtn"><i class="fas fa-sync-alt"></i> Yenile</a>
+        </div>
+        <div class="card-grid" id="featuredGrid">
+            <div style="grid-column:1/-1; text-align:center; padding:40px;">
+                <i class="fas fa-spinner fa-spin" style="font-size:40px; color:#ff6b35;"></i>
+                <p style="margin-top:10px; color:#888;">Öne çıkan mekanlar yükleniyor...</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">© 2026 <span>NereyeGitsek?</span> · Buluşmalar artık çok daha keyifli 🚀</div>
+
+    <!-- KARAR ÇARKI MODAL -->
+    <div class="modal" id="wheelModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>🎡 Şans Çarkı</h2>
+            <p>Kararsız kaldıysan çarkı çevir, kaderin seni nereye götürecek?</p>
+            <div class="wheel-container"><canvas id="wheelCanvas" width="300" height="300"></canvas></div>
+            <button id="spinWheelBtn" class="btn-spin">Çevir!</button>
+            <p id="wheelResult" class="wheel-result"></p>
+        </div>
+    </div>
+
+    <!-- MEKAN DETAY MODAL -->
+    <div class="detail-modal" id="detailModal">
+        <div class="detail-content">
+            <span class="detail-close" id="closeDetail">&times;</span>
+            <img id="detailImage" class="detail-img" src="" alt="Mekan Görseli">
+            <div class="detail-body">
+                <h2 id="detailName"></h2>
+                <div class="detail-rating" id="detailRating"></div>
+                <div class="detail-meta">
+                    <span><i class="fas fa-tag"></i> <span id="detailCategory"></span></span>
+                    <span><i class="fas fa-map-pin"></i> <span id="detailDistrict"></span></span>
+                    <span><i class="fas fa-coins"></i> <span id="detailPrice"></span></span>
+                </div>
+                <p class="detail-desc" id="detailDescription"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
